@@ -121,7 +121,6 @@ public class PlanetBoard {
 
     private void fight(String initiator){
 
-        int thrownValue = Dice.throwd6();
 
         if(initiator.equals("drone")){
             //dron attacks
@@ -130,23 +129,6 @@ public class PlanetBoard {
             // alien attack
 
             // drone attack
-        }
-        if (!drone.isDestroyed()) {
-            while(true){
-                thrownValue = Dice.throwd6();
-                if(alien.isAlienDead(thrownValue, logRecorder)) {
-                    if(ship.getWeaponSystem().isAvailable() || ship.getWeaponSystem().getWeapons() != 0){
-                        alien.destroy();
-                        alienDestroyed();
-                        ship.getWeaponSystem().spendAmmo(1);
-                        break;
-                    } else drone.damageDrone();
-                }
-                thrownValue = Dice.throwd6();
-                droneAttacked(thrownValue);
-                if (droneDestroyed) break;
-
-            }
         }
 
     }

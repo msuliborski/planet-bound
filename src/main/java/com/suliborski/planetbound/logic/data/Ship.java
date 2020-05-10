@@ -12,11 +12,11 @@ public class Ship {
     private int crew;
     private int fuel;
     private int shields;
-    private int weaponSystems;
+    private int ammo;
     private int crewCapacity;
     private int fuelCapacity;
     private int shieldsCapacity;
-    private int weaponSystemsCapacity;
+    private int ammoCapacity;
     private int artifacts;
     private int redCargo;
     private int greenCargo;
@@ -29,6 +29,8 @@ public class Ship {
 
     private int cargoLevel;
     private int maxCargoLevel;
+    private int weaponSystemLevel;
+    private int maxWeaponSystemLevel;
 
     private boolean isDroneWorking;
 
@@ -60,10 +62,10 @@ public class Ship {
     }
     
     public void buyAmmo() {
-        if (getBlackCargo() > 0 && getBlueCargo() > 0 && getWeaponSystems() < getWeaponSystemsCapacity()) {
+        if (getBlackCargo() > 0 && getBlueCargo() > 0 && getAmmo() < getAmmoCapacity()) {
             removeCargo("black", 1);
             removeCargo("blue", 1);
-            setWeaponSystems(getWeaponSystems() + 1);
+            setAmmo(getAmmo() + 1);
         }
     }
 
@@ -76,13 +78,35 @@ public class Ship {
         }
     }
 
+    public void buyDrone() {
+        if (getBlackCargo() > 1 && getGreenCargo() > 1 && getRedCargo() > 1 && getBlueCargo() > 1 && !isDroneWorking()) {
+            removeCargo("black", 2);
+            removeCargo("red", 2);
+            removeCargo("blue", 2);
+            removeCargo("green", 2);
+            setDroneWorking(true);
+        }
+    }
+
+
+
 
     public void upgradeCargo() {
-        if (getBlackCargo() > 2 && getGreenCargo() > 2 && getRedCargo() > 2 && getBlueCargo() > 2 && getCargoLevel() < getMaxCargoLevel()) {
-            removeCargo("black", 3);
-            removeCargo("red", 3);
-            removeCargo("blue", 3);
-            removeCargo("green", 3);
+        if (getBlackCargo() >= 2 && getGreenCargo() >= 2 && getRedCargo() >= 2 && getBlueCargo() >= 2 && getCargoLevel() < getMaxCargoLevel()) {
+            removeCargo("black", 2);
+            removeCargo("red", 2);
+            removeCargo("blue", 2);
+            removeCargo("green", 2);
+            setCargoLevel(getCargoLevel() + 1);
+        }
+    }
+
+    public void upgradeWeaponSystem() {
+        if (getBlackCargo() >= 2 && getGreenCargo() >= 2 && getRedCargo() >= 2 && getBlueCargo() >= 2 && getWeaponSystemLevel() < getMaxWeaponSystemLevel()) {
+            removeCargo("black", 2);
+            removeCargo("red", 2);
+            removeCargo("blue", 2);
+            removeCargo("green", 2);
             setCargoLevel(getCargoLevel() + 1);
         }
     }
