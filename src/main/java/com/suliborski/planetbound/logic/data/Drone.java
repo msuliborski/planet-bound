@@ -8,8 +8,8 @@ public class Drone extends Minion {
     private String cargoType;
     private boolean isCargoLoaded;
 
-    public Drone(int health, int positionX, int positionY, String cargoType) {
+    public Drone(int health, int positionX, int positionY) {
         super(health, positionX, positionY);
-        this.cargoType = cargoType;
+        isCargoLoaded = false;
     }
 }

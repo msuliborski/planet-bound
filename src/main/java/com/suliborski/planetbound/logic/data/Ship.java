@@ -1,5 +1,6 @@
 package com.suliborski.planetbound.logic.data;
 
+import com.suliborski.planetbound.logic.states.IState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -29,7 +30,7 @@ public class Ship {
     private int cargoLevel;
     private int maxCargoLevel;
 
-    private Landable currentLandable;
+    private boolean isDroneWorking;
 
     Ship(){
 
@@ -49,14 +50,51 @@ public class Ship {
         else blackCargo = Math.max(blackCargo - amount, 0);
     }
 
-    void goToLandable(Landable l, Event e) {
-
+    public void buyEnergyShield() {
+        if (getBlackCargo() > 0 && getGreenCargo() > 0 && getBlueCargo() > 0 && getShields() < getShieldsCapacity()) {
+            removeCargo("black", 1);
+            removeCargo("green", 1);
+            removeCargo("blue", 1);
+            setShields(getShields() + 1);
+        }
     }
-    void explore(Planet p) {
-
+    
+    public void buyAmmo() {
+        if (getBlackCargo() > 0 && getBlueCargo() > 0 && getWeaponSystems() < getWeaponSystemsCapacity()) {
+            removeCargo("black", 1);
+            removeCargo("blue", 1);
+            setWeaponSystems(getWeaponSystems() + 1);
+        }
     }
-    void buy(String type) {
 
+    public void buyFuel() {
+        if (getBlackCargo() > 0 && getGreenCargo() > 0 && getRedCargo() > 0 && getFuel() < getFuelCapacity()) {
+            removeCargo("black", 1);
+            removeCargo("red", 1);
+            removeCargo("blue", 1);
+            setFuel(getFuel() + 1);
+        }
+    }
+
+
+    public void upgradeCargo() {
+        if (getBlackCargo() > 2 && getGreenCargo() > 2 && getRedCargo() > 2 && getBlueCargo() > 2 && getCargoLevel() < getMaxCargoLevel()) {
+            removeCargo("black", 3);
+            removeCargo("red", 3);
+            removeCargo("blue", 3);
+            removeCargo("green", 3);
+            setCargoLevel(getCargoLevel() + 1);
+        }
+    }
+
+    public void recruitCrewMember() {
+        if (getBlackCargo() > 0 && getGreenCargo() > 0 && getRedCargo() > 0 && getBlueCargo() > 0 && getCrew() < getCrewCapacity()) {
+            removeCargo("black", 1);
+            removeCargo("red", 1);
+            removeCargo("blue", 1);
+            removeCargo("green", 1);
+            setCrew(getCrew() + 1);
+        }
     }
 
 }

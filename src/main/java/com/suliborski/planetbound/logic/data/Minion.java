@@ -7,12 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public abstract class Minion {
     private int health;
-    private int positionX;
-    private int positionY;
-
-    void attack(Minion m){
-
-    }
-
+    private int x;
+    private int y;
 
 }
