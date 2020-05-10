@@ -39,4 +39,12 @@ public class GalaxyData {
             else event = new Event("crew-rescue");
         }
     }
+
+    public void saveGame(){
+        // to be implemented...
+    }
+
+    public void loadGame(){
+        // to be implemented...
+    }
 }

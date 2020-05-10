@@ -18,7 +18,8 @@ public class ShipSelectionState extends StateAdapter {
         else
             galaxyData.setShip(new Ship(type, 6, 35, 18, 18, 6, 35, 18, 18, 0, 0, 0, 0, 0, 6, 6, 6, 6, 0, 1, 1, 2, true));
 
-        return new OnPlanetState(galaxyData);
+        galaxyData.prepareLandable();
+        return galaxyData.getLandable().isPlanet() ? new OnPlanetState(galaxyData) : new OnSpaceStationState(galaxyData);
     }
 }
 

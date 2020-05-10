@@ -20,5 +20,9 @@ public interface IState {
     IState moveLeft();
     IState moveRight();
     IState playAgain();
+    IState saveGame();
+    IState loadGame();
+    IState exitGame();
+
 
 }

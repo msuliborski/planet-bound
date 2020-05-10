@@ -55,4 +55,16 @@ public class OnSpaceStationState extends StateAdapter {
         galaxyData.getShip().upgradeCargo();
         return this;
     }
+
+    @Override
+    public IState saveGame() {
+        galaxyData.saveGame();
+        return this;
+    }
+
+    @Override
+    public IState exitGame() {
+        galaxyData.saveGame();
+        return null;
+    }
 }

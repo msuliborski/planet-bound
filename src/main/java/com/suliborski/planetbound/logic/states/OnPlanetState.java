@@ -39,6 +39,18 @@ public class OnPlanetState extends StateAdapter {
         galaxyData.getPlanetBoard().prepareBoard(((Planet) galaxyData.getLandable()).getType());
         return new OnExpeditionState(galaxyData);
     }
+
+    @Override
+    public IState saveGame() {
+        galaxyData.saveGame();
+        return this;
+    }
+
+    @Override
+    public IState exitGame() {
+        galaxyData.saveGame();
+        return null;
+    }
 }
 
 

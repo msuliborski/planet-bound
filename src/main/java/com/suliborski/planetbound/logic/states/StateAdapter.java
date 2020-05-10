@@ -90,4 +90,19 @@ public class StateAdapter implements IState {
         return this;
     }
 
+    @Override
+    public IState saveGame() {
+        return this;
+    }
+
+    @Override
+    public IState loadGame() {
+        return this;
+    }
+
+    @Override
+    public IState exitGame() {
+        return this;
+    }
+
 }
