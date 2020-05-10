@@ -38,7 +38,6 @@ public class OnSpaceStationState extends StateAdapter {
         return this;
     }
 
-
     @Override
     public IState upgradeCargoCapacity() {
         galaxy.getShip().upgradeCargo();

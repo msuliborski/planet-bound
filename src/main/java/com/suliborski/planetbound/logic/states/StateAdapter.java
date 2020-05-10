@@ -22,7 +22,7 @@ public class StateAdapter implements IState {
 
     @Override
     public IState acceptTravelConsequences() {
-        return null;
+        return this;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class StateAdapter implements IState {
 
     @Override
     public IState buyDrone() {
-        return null;
+        return this;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class StateAdapter implements IState {
 
     @Override
     public IState upgradeWeaponSystem() {
-        return null;
+        return this;
     }
 
     @Override
@@ -82,6 +82,11 @@ public class StateAdapter implements IState {
 
     @Override
     public IState moveRight() {
+        return this;
+    }
+
+    @Override
+    public IState playAgain() {
         return this;
     }
 

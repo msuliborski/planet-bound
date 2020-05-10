@@ -1,6 +1,7 @@
 package com.suliborski.planetbound.logic.states;
 
 import com.suliborski.planetbound.logic.Galaxy;
+import com.suliborski.planetbound.logic.data.Planet;
 
 public class OnPlanetState extends StateAdapter {
 
@@ -34,8 +35,8 @@ public class OnPlanetState extends StateAdapter {
 
     @Override
     public IState explorePlanet() {
-        galaxy.getPlanetBoard().prepareBoard();
-        return super.explorePlanet();
+        galaxy.getPlanetBoard().prepareBoard(((Planet)galaxy.getLandable()).getType());
+        return new OnExpeditionState(galaxy);
     }
 }
 

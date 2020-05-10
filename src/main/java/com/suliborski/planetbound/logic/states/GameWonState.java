@@ -7,4 +7,9 @@ public class GameWonState extends StateAdapter {
     public GameWonState(Galaxy galaxy) {
         super(galaxy);
     }
+
+    @Override
+    public IState playAgain(){
+        return new ShipSelectionState(galaxy);
+    }
 }

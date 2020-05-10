@@ -19,5 +19,6 @@ public interface IState {
     IState moveDown();
     IState moveLeft();
     IState moveRight();
+    IState playAgain();
 
 }

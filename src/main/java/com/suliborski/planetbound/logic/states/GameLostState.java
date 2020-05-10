@@ -6,4 +6,9 @@ public class GameLostState extends StateAdapter {
     public GameLostState(Galaxy galaxy) {
         super(galaxy);
     }
+
+    @Override
+    public IState playAgain(){
+        return new ShipSelectionState(galaxy);
+    }
 }

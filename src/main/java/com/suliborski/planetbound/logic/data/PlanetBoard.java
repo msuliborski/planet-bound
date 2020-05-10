@@ -32,19 +32,24 @@ public class PlanetBoard {
 
         spawnAlien();
 
-
         resourceX = (int) Math.floor(Math.random() * 3 + 4);
         resourceY = (int) Math.floor(Math.random() * 3 + 4);
 
         List<String> resourceIds = new ArrayList<>();
-        if (planetType.equals("red")) resourceIds.add("red"); resourceIds.add("blue");
-        if (planetType.equals("green")) resourceIds.add("red"); resourceIds.add("green");
-        if (planetType.equals("blue")) resourceIds.add("black"); resourceIds.add("green"); resourceIds.add("blue"); resourceIds.add("artifact");
-        if (planetType.equals("black")) resourceIds.add("black"); resourceIds.add("blue");
+        if (planetType.equals("red")) resourceIds.add("red");
+        resourceIds.add("blue");
+        if (planetType.equals("green")) resourceIds.add("red");
+        resourceIds.add("green");
+        if (planetType.equals("blue")) resourceIds.add("black");
+        resourceIds.add("green");
+        resourceIds.add("blue");
+        resourceIds.add("artifact");
+        if (planetType.equals("black")) resourceIds.add("black");
+        resourceIds.add("blue");
         resourceType = resourceIds.get(new Random().nextInt(resourceIds.size()));
     }
 
-    public void spawnAlien(){
+    public void spawnAlien() {
 
         alien.setHealth(1);
 
@@ -58,13 +63,13 @@ public class PlanetBoard {
 
         double r = Math.floor(Math.random() * 4 + 1);
         if (r == 1) alien = new Alien("red", 1, alienX, alienY);
-        else if (r == 2) alien = new Alien("green", 1, alienX,alienY);
-        else if (r == 3) alien = new Alien("blue", 1, alienX,alienY);
-        else alien = new Alien("black", 1, alienX,alienY);
+        else if (r == 2) alien = new Alien("green", 1, alienX, alienY);
+        else if (r == 3) alien = new Alien("blue", 1, alienX, alienY);
+        else alien = new Alien("black", 1, alienX, alienY);
 
     }
 
-    public boolean move(String direction) {
+    public boolean moveDrone(String direction) {
         if (drone.getHealth() == 0) return false;
         if (direction.equals("up") && drone.getY() > 0)
             drone.setY(drone.getY() - 1);
@@ -79,6 +84,11 @@ public class PlanetBoard {
         if (drone.getX() == resourceX && drone.getY() == resourceY) {
             drone.setCargoLoaded(true);
             drone.setCargoType(resourceType);
+        }
+
+        if (drone.getX() == landingPlaceX && drone.getY() == landingPlaceY && drone.isCargoLoaded()) {
+            drone.setBackWithCargo(true);
+            return true;
         }
 
         if (alien.getHealth() != 0) {
@@ -114,23 +124,34 @@ public class PlanetBoard {
                 fight("alien");
         }
     }
-    private boolean checkIfInRange(int x1, int y1, int x2, int y2){
+
+    private boolean checkIfInRange(int x1, int y1, int x2, int y2) {
         return (x1 == x2 && y1 == y2) || (x1 == x2 - 1 && y1 == y2) || (x1 == x2 + 1 && y1 == y2) ||
                 (x1 == x2 && y1 == y2 - 1) || (x1 == x2 && y1 == y2 + 1);
     }
 
-    private void fight(String initiator){
-
-
-        if(initiator.equals("drone")){
-            //dron attacks
+    private void fight(String initiator) {
+        if (initiator.equals("drone")) {
+            if (Math.random() <= 0.333333d) {
+                alien.setHealth(0);
+                waitTimeForAlien = (int) Math.floor(Math.random() * 6 + 1);
+                return;
+            }
         }
+
         while (true) {
-            // alien attack
+            if (alien.getType().equals("black")) { //alien attacks
+                if (Math.random() <= 0.166666d) drone.setHealth(drone.getHealth() - 1);
+                else if (Math.random() <= 0.333333d) drone.setHealth(drone.getHealth() - 1);
 
-            // drone attack
+                if (drone.getHealth() == 0) return;
+
+                if (Math.random() <= 0.333333d) { //drone attacks
+                    alien.setHealth(0);
+                    waitTimeForAlien = (int) Math.floor(Math.random() * 6 + 1);
+                    return;
+                }
+            }
         }
-
     }
-
 }
