@@ -43,12 +43,12 @@ public class Galaxy {
         double r = Math.random();
         if (r > 0.3) {
             r = Math.floor(Math.random() * 4 + 1);
-            if (r == 1) nextLandable = new Planet("red", 1, 0, 1, 0, 0, true);
-            else if (r == 2) nextLandable = new Planet("green", 1, 1, 0, 0, 0, true);
-            else if (r == 3) nextLandable = new Planet("blue", 0, 1, 1, 1, 1, true);
-            else nextLandable = new Planet("black", 0, 0, 1, 1, 0, true);
+            if (r == 1) nextLandable = new Planet("red", 1, 0, 1, 0, 0, true, true);
+            else if (r == 2) nextLandable = new Planet("green", 1, 1, 0, 0, 0, true, true);
+            else if (r == 3) nextLandable = new Planet("blue", 0, 1, 1, 1, 1, true, true);
+            else nextLandable = new Planet("black", 0, 0, 1, 1, 0, true, true);
         } else
-            nextLandable = new SpaceStation();
+            nextLandable = new SpaceStation(false);
 
         r = Math.random();
         if (r < 0.125) {
@@ -170,14 +170,25 @@ public class Galaxy {
                 return true;
             }
         }
-        return false;
 
         if (what.equals("cargo-upgrade")) {
-            if (ship.getBlackCargo() > 2 && ship.getGreenCargo() > 2 && ship.getRedCargo() > 2 && ship.getBlueCargo() > 2 && nextLandable.) {
+            if (ship.getBlackCargo() > 2 && ship.getGreenCargo() > 2 && ship.getRedCargo() > 2 && ship.getBlueCargo() > 2 && ship.getCargoLevel() < ship.getMaxCargoLevel() && !nextLandable.isPlanet()) {
+                ship.removeCargo("black", 3);
+                ship.removeCargo("red", 3);
+                ship.removeCargo("blue", 3);
+                ship.removeCargo("green", 3);
+                ship.setCargoLevel(ship.getCargoLevel() + 1);
+                return true;
+            }
+        }
+
+        if (what.equals("crew")) {
+            if (ship.getBlackCargo() > 0 && ship.getGreenCargo() > 0 && ship.getRedCargo() > 0 && ship.getBlueCargo() > 0 && ship.getCrew() < ship.getCrewCapacity() && !nextLandable.isPlanet()) {
                 ship.removeCargo("black", 1);
                 ship.removeCargo("red", 1);
                 ship.removeCargo("blue", 1);
-                ship.setFuel(ship.getFuel() + 1);
+                ship.removeCargo("green", 1);
+                ship.setCrew(ship.getCrew() + 1);
                 return true;
             }
         }

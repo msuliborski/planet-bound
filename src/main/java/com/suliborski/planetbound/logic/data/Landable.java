@@ -7,4 +7,6 @@ import lombok.Data;
 @AllArgsConstructor
 public abstract class Landable {
 
+    private boolean isPlanet;
+
 }
