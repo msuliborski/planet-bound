@@ -1,13 +1,13 @@
 package com.suliborski.planetbound.logic.states;
 
-import com.suliborski.planetbound.logic.Galaxy;
+import com.suliborski.planetbound.logic.GalaxyData;
 
 public class StateAdapter implements IState {
 
-    Galaxy galaxy;
+    GalaxyData galaxyData;
 
-    public StateAdapter(Galaxy galaxy) {
-        this.galaxy = galaxy;
+    public StateAdapter(GalaxyData galaxyData) {
+        this.galaxyData = galaxyData;
     }
 
     @Override

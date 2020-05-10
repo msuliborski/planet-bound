@@ -1,42 +1,43 @@
 package com.suliborski.planetbound.logic.states;
 
-import com.suliborski.planetbound.logic.Galaxy;
+import com.suliborski.planetbound.logic.GalaxyData;
 import com.suliborski.planetbound.logic.data.Planet;
 
 public class OnPlanetState extends StateAdapter {
 
 
-    public OnPlanetState(Galaxy galaxy) {
-        super(galaxy);
+    public OnPlanetState(GalaxyData galaxyData) {
+        super(galaxyData);
+
     }
 
     @Override
     public IState travelToLandable() {
-        return new AcceptTravelConsequencesState(galaxy);
+        return new AcceptTravelConsequencesState(galaxyData);
     }
 
     @Override
     public IState buyEnergyShield() {
-        galaxy.getShip().buyEnergyShield();
+        galaxyData.getShip().buyEnergyShield();
         return this;
     }
 
     @Override
     public IState buyAmmo() {
-        galaxy.getShip().buyAmmo();
+        galaxyData.getShip().buyAmmo();
         return this;
     }
 
     @Override
     public IState buyFuel() {
-        galaxy.getShip().buyFuel();
+        galaxyData.getShip().buyFuel();
         return this;
     }
 
     @Override
     public IState explorePlanet() {
-        galaxy.getPlanetBoard().prepareBoard(((Planet)galaxy.getLandable()).getType());
-        return new OnExpeditionState(galaxy);
+        galaxyData.getPlanetBoard().prepareBoard(((Planet) galaxyData.getLandable()).getType());
+        return new OnExpeditionState(galaxyData);
     }
 }
 

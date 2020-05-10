@@ -1,32 +1,16 @@
 package com.suliborski.planetbound.logic;
 
 import com.suliborski.planetbound.logic.data.*;
-import com.suliborski.planetbound.logic.states.IState;
-import com.suliborski.planetbound.logic.states.ShipSelectionState;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
-public class Galaxy {
+public class GalaxyData {
     Ship ship;
 
     Landable landable;
     Event event;
 
     PlanetBoard planetBoard;
-
-    @Getter @Setter
-    private IState state;
-
-    private Galaxy(int stateId) {
-        switch(stateId) {
-            case 0:
-                state = new ShipSelectionState(this);
-                break;
-        }
-    }
-
 
     public void prepareLandable() {
         double r = Math.random();
