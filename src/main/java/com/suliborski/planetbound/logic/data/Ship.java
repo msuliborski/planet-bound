@@ -1,6 +1,5 @@
 package com.suliborski.planetbound.logic.data;
 
-import com.suliborski.planetbound.logic.states.IState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -34,91 +33,112 @@ public class Ship {
 
     private boolean isDroneWorking;
 
-    Ship(){
-
+    public void addResource(String type, int amount) {
+        switch (type) {
+            case "red": redCargo = Math.min(redCargo + amount, redCargoCapacity); break;
+            case "green": greenCargo = Math.min(greenCargo + amount, greenCargoCapacity); break;
+            case "blue": blueCargo = Math.min(blueCargo + amount, blueCargoCapacity); break;
+            case "black": blackCargo = Math.min(blackCargo + amount, blackCargoCapacity); break;
+            case "artifact": artifacts += amount; break;
+        }
     }
 
-    public void addCargo(String type, int amount) {
-        if (type.equals("red")) redCargo = Math.min(redCargo + amount, redCargoCapacity);
-        else if (type.equals("green")) greenCargo = Math.min(greenCargo + amount, greenCargoCapacity);
-        else if (type.equals("blue")) blueCargo = Math.min(blueCargo + amount, blueCargoCapacity);
-        else blackCargo = Math.min(blackCargo + amount, blackCargoCapacity);
+    public boolean removeResource(String type, int amount, boolean forceRemoval) { //if force true, you must have needed resources
+        switch (type) {
+            case "red":
+                if (forceRemoval && redCargo - amount < 0) return false;
+                else redCargo = Math.max(redCargo - amount, 0); return true;
+            case "green":
+                if (forceRemoval && greenCargo - amount < 0) return false;
+                else greenCargo = Math.max(greenCargo - amount, 0); return true;
+            case "blue":
+                if (forceRemoval && blueCargo - amount < 0) return false;
+                else blueCargo = Math.max(blueCargo - amount, 0); return true;
+            case "black":
+                if (forceRemoval && blackCargo - amount < 0) return false;
+                else blackCargo = Math.max(blackCargo - amount, 0); return true;
+        }
+        return false;
     }
 
-    public void removeCargo(String type, int amount) {
-        if (type.equals("red")) redCargo = Math.max(redCargo - amount, 0);
-        else if (type.equals("green")) greenCargo = Math.max(greenCargo - amount, 0);
-        else if (type.equals("blue")) blueCargo = Math.max(blueCargo - amount, 0);
-        else blackCargo = Math.max(blackCargo - amount, 0);
+    public void convertResource(String type, String into){
+        if (removeResource(type, 1, true))
+            addResource(into, 1);
     }
 
-    public void buyEnergyShield() {
-        if (getBlackCargo() > 0 && getGreenCargo() > 0 && getBlueCargo() > 0 && getShields() < getShieldsCapacity()) {
-            removeCargo("black", 1);
-            removeCargo("green", 1);
-            removeCargo("blue", 1);
+    public void produceEnergyShield() {
+        if (getBlackCargo() >= 1 && getGreenCargo() >= 1 && getBlueCargo() >= 1 && getShields() < getShieldsCapacity()) {
+            removeResource("black", 1, true);
+            removeResource("green", 1, true);
+            removeResource("blue", 1, true);
             setShields(getShields() + 1);
         }
     }
     
-    public void buyAmmo() {
-        if (getBlackCargo() > 0 && getBlueCargo() > 0 && getAmmo() < getAmmoCapacity()) {
-            removeCargo("black", 1);
-            removeCargo("blue", 1);
+    public void produceAmmo() {
+        if (getBlackCargo() >= 1 && getBlueCargo() >= 1 && getAmmo() < getAmmoCapacity()) {
+            removeResource("black", 1, true);
+            removeResource("blue", 1, true);
             setAmmo(getAmmo() + 1);
         }
     }
 
-    public void buyFuel() {
-        if (getBlackCargo() > 0 && getGreenCargo() > 0 && getRedCargo() > 0 && getFuel() < getFuelCapacity()) {
-            removeCargo("black", 1);
-            removeCargo("red", 1);
-            removeCargo("blue", 1);
+    public void produceFuel() {
+        if (getBlackCargo() >= 1 && getGreenCargo() >= 1 && getRedCargo() >= 1 && getFuel() < getFuelCapacity()) {
+            removeResource("black", 1, true);
+            removeResource("red", 1, true);
+            removeResource("blue", 1, true);
             setFuel(getFuel() + 1);
         }
     }
 
     public void buyDrone() {
-        if (getBlackCargo() > 1 && getGreenCargo() > 1 && getRedCargo() > 1 && getBlueCargo() > 1 && !isDroneWorking()) {
-            removeCargo("black", 2);
-            removeCargo("red", 2);
-            removeCargo("blue", 2);
-            removeCargo("green", 2);
+        if (getBlackCargo() >= 2 && getGreenCargo() >= 2 && getRedCargo() >= 2 && getBlueCargo() >= 2 && !isDroneWorking()) {
+            removeResource("black", 2, true);
+            removeResource("red", 2, true);
+            removeResource("blue", 2, true);
+            removeResource("green", 2, true);
             setDroneWorking(true);
         }
     }
 
-
-
-
     public void upgradeCargo() {
-        if (getBlackCargo() >= 2 && getGreenCargo() >= 2 && getRedCargo() >= 2 && getBlueCargo() >= 2 && getCargoLevel() < getMaxCargoLevel()) {
-            removeCargo("black", 2);
-            removeCargo("red", 2);
-            removeCargo("blue", 2);
-            removeCargo("green", 2);
+        if (getBlackCargo() >= 1 && getGreenCargo() >= 1 && getRedCargo() >= 1 && getBlueCargo() >= 1 && getCargoLevel() < getMaxCargoLevel()) {
+            removeResource("black", 1, true);
+            removeResource("red", 1, true);
+            removeResource("blue", 1, true);
+            removeResource("green", 1, true);
             setCargoLevel(getCargoLevel() + 1);
         }
     }
 
     public void upgradeWeaponSystem() {
         if (getBlackCargo() >= 2 && getGreenCargo() >= 2 && getRedCargo() >= 2 && getBlueCargo() >= 2 && getWeaponSystemLevel() < getMaxWeaponSystemLevel()) {
-            removeCargo("black", 2);
-            removeCargo("red", 2);
-            removeCargo("blue", 2);
-            removeCargo("green", 2);
+            removeResource("black", 2, true);
+            removeResource("red", 2, true);
+            removeResource("blue", 2, true);
+            removeResource("green", 2, true);
             setCargoLevel(getCargoLevel() + 1);
         }
     }
 
     public void recruitCrewMember() {
-        if (getBlackCargo() > 0 && getGreenCargo() > 0 && getRedCargo() > 0 && getBlueCargo() > 0 && getCrew() < getCrewCapacity()) {
-            removeCargo("black", 1);
-            removeCargo("red", 1);
-            removeCargo("blue", 1);
-            removeCargo("green", 1);
+        if (getBlackCargo() >=1  && getGreenCargo() >= 1 && getRedCargo() >= 1 && getBlueCargo() >= 1 && getCrew() < getCrewCapacity()) {
+            removeResource("black", 1, true);
+            removeResource("red", 1, true);
+            removeResource("blue", 1, true);
+            removeResource("green", 1, true);
             setCrew(getCrew() + 1);
         }
     }
 
+    public void fullFixEnergyShields() {
+        if (getBlackCargo() >= 1 && getGreenCargo() >= 1 && getRedCargo() >= 1 && getBlueCargo() >= 1 && getShields() < getShieldsCapacity()) {
+            removeResource("black", 1, true);
+            removeResource("red", 1, true);
+            removeResource("blue", 1, true);
+            removeResource("green", 1, true);
+            shields = shieldsCapacity;
+        }
+    }
 }

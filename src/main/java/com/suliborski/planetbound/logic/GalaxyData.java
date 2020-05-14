@@ -5,23 +5,23 @@ import lombok.Data;
 
 @Data
 public class GalaxyData {
+
     Ship ship;
 
-    Landable landable;
+    Planet planet;
     Event event;
 
-    PlanetBoard planetBoard;
+    Expedition expedition;
 
-    public void prepareLandable() {
-        double r = Math.random();
-        if (r > 0.3) {
-            r = Math.floor(Math.random() * 4 + 1);
-            if (r == 1) landable = new Planet("red", 1, 0, 1, 0, 0, true, true);
-            else if (r == 2) landable = new Planet("green", 1, 1, 0, 0, 0, true, true);
-            else if (r == 3) landable = new Planet("blue", 0, 1, 1, 1, 1, true, true);
-            else landable = new Planet("black", 0, 0, 1, 1, 0, true, true);
-        } else
-            landable = new SpaceStation(false);
+    private int artifactsNeeded = 5;
+
+    public void preparePlanet() {
+        double r = Math.floor(Math.random() * 4 + 1);
+        if (r == 1) planet = new Planet("red");
+        else if (r == 2) planet = new Planet("green");
+        else if (r == 3) planet = new Planet("blue");
+        else planet = new Planet("black");
+        expedition = new Expedition();
     }
 
 

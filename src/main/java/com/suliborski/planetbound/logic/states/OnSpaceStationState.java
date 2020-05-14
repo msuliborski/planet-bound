@@ -10,25 +10,14 @@ public class OnSpaceStationState extends StateAdapter {
     }
 
     @Override
-    public IState travelToLandable() {
-        return new AcceptTravelConsequencesState(galaxyData);
-    }
-
-    @Override
-    public IState buyEnergyShield() {
-        galaxyData.getShip().buyEnergyShield();
+    public IState convertResource(String type, String into) {
+        galaxyData.getShip().convertResource(type, into);
         return this;
     }
 
     @Override
-    public IState buyAmmo() {
-        galaxyData.getShip().buyEnergyShield();
-        return this;
-    }
-
-    @Override
-    public IState buyFuel() {
-        galaxyData.getShip().buyFuel();
+    public IState fullFixEnergyShields() {
+        galaxyData.getShip().fullFixEnergyShields();
         return this;
     }
 
@@ -52,19 +41,12 @@ public class OnSpaceStationState extends StateAdapter {
 
     @Override
     public IState recruitCrewMember() {
-        galaxyData.getShip().upgradeCargo();
+        galaxyData.getShip().recruitCrewMember();
         return this;
     }
 
     @Override
-    public IState saveGame() {
-        galaxyData.saveGame();
-        return this;
-    }
-
-    @Override
-    public IState exitGame() {
-        galaxyData.saveGame();
-        return null;
+    public IState leaveSpaceStation() {
+        return new OnPlanetState(galaxyData);
     }
 }

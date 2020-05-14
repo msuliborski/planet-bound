@@ -2,16 +2,14 @@ package com.suliborski.planetbound.logic.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-public class PlanetBoard {
-    private Alien alien;
+@NoArgsConstructor
+public class Expedition {
 
+    private Alien alien;
     private Drone drone;
 
     private int landingPlaceX;
@@ -21,10 +19,11 @@ public class PlanetBoard {
     private int resourceX;
     private int resourceY;
 
-    private int waitTimeForAlien = 999;
+    private int waitTimeForAlien = 999; //change
 
+    Planet planet;
 
-    public void prepareBoard(String planetType) {
+    public void prepareExpedition(Planet planet) {
 
         landingPlaceX = (int) Math.floor(Math.random() * 3);
         landingPlaceY = (int) Math.floor(Math.random() * 3);
@@ -32,26 +31,13 @@ public class PlanetBoard {
 
         spawnAlien();
 
-        resourceX = (int) Math.floor(Math.random() * 3 + 4);
-        resourceY = (int) Math.floor(Math.random() * 3 + 4);
-
-        List<String> resourceIds = new ArrayList<>();
-        if (planetType.equals("red")) resourceIds.add("red");
-        resourceIds.add("blue");
-        if (planetType.equals("green")) resourceIds.add("red");
-        resourceIds.add("green");
-        if (planetType.equals("blue")) resourceIds.add("black");
-        resourceIds.add("green");
-        resourceIds.add("blue");
-        resourceIds.add("artifact");
-        if (planetType.equals("black")) resourceIds.add("black");
-        resourceIds.add("blue");
-        resourceType = resourceIds.get(new Random().nextInt(resourceIds.size()));
+        resourceX = (int) Math.floor(Math.random() * 3 + 3);
+        resourceY = (int) Math.floor(Math.random() * 3 + 3);
+        resourceType = planet.getRandomResource();
     }
 
     public void spawnAlien() {
 
-        alien.setHealth(1);
 
         int alienX = drone.getX();
         int alienY = drone.getY();
@@ -66,11 +52,11 @@ public class PlanetBoard {
         else if (r == 2) alien = new Alien("green", 1, alienX, alienY);
         else if (r == 3) alien = new Alien("blue", 1, alienX, alienY);
         else alien = new Alien("black", 1, alienX, alienY);
-
+        alien.setHealth(1);
     }
 
-    public boolean moveDrone(String direction) {
-        if (drone.getHealth() == 0) return false;
+    public void moveDrone(String direction) {
+        if (drone.getHealth() == 0) return;
         if (direction.equals("up") && drone.getY() > 0)
             drone.setY(drone.getY() - 1);
         else if (direction.equals("down") && drone.getY() < 5)
@@ -88,7 +74,7 @@ public class PlanetBoard {
 
         if (drone.getX() == landingPlaceX && drone.getY() == landingPlaceY && drone.isCargoLoaded()) {
             drone.setBackWithCargo(true);
-            return true;
+            return;
         }
 
         if (alien.getHealth() != 0) {
@@ -96,8 +82,10 @@ public class PlanetBoard {
                 fight("drone");
             else
                 moveAlien();
+        } else {
+            waitTimeForAlien--;
+            if (waitTimeForAlien == 0) spawnAlien();
         }
-        return true;
     }
 
     private void moveAlien() {
@@ -139,19 +127,19 @@ public class PlanetBoard {
             }
         }
 
-        while (true) {
+        while (drone.getHealth() != 0 && alien.getHealth() != 0) {
             if (alien.getType().equals("black")) { //alien attacks
                 if (Math.random() <= 0.166666d) drone.setHealth(drone.getHealth() - 1);
-                else if (Math.random() <= 0.333333d) drone.setHealth(drone.getHealth() - 1);
+            } else {
+                if (Math.random() <= 0.333333d) drone.setHealth(drone.getHealth() - 1);
+            }
+            if (drone.getHealth() == 0) break;
 
-                if (drone.getHealth() == 0) return;
-
-                if (Math.random() <= 0.333333d) { //drone attacks
-                    alien.setHealth(0);
-                    waitTimeForAlien = (int) Math.floor(Math.random() * 6 + 1);
-                    return;
-                }
+            if (Math.random() <= 0.333333d) { //drone attacks
+                alien.setHealth(0);
+                waitTimeForAlien = (int) Math.floor(Math.random() * 6 + 1);
             }
         }
     }
 }
+

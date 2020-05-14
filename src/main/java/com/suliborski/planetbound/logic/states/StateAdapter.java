@@ -15,8 +15,9 @@ public class StateAdapter implements IState {
         return this;
     }
 
+
     @Override
-    public IState travelToLandable() {
+    public IState travelToNextPlanet() {
         return this;
     }
 
@@ -25,18 +26,19 @@ public class StateAdapter implements IState {
         return this;
     }
 
+
     @Override
-    public IState buyEnergyShield() {
+    public IState visitSpaceStation() {
         return this;
     }
 
     @Override
-    public IState buyAmmo() {
+    public IState convertResource(String type, String into) {
         return this;
     }
 
     @Override
-    public IState buyFuel() {
+    public IState fullFixEnergyShields() {
         return this;
     }
 
@@ -61,7 +63,13 @@ public class StateAdapter implements IState {
     }
 
     @Override
-    public IState explorePlanet() {
+    public IState leaveSpaceStation() {
+        return this;
+    }
+
+
+    @Override
+    public IState goOnExpedition() {
         return this;
     }
 
@@ -84,6 +92,23 @@ public class StateAdapter implements IState {
     public IState moveRight() {
         return this;
     }
+
+
+    @Override
+    public IState produceEnergyShield() {
+        return this;
+    }
+
+    @Override
+    public IState produceAmmo() {
+        return this;
+    }
+
+    @Override
+    public IState produceFuel() {
+        return this;
+    }
+
 
     @Override
     public IState playAgain() {

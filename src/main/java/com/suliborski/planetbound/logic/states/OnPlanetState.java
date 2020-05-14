@@ -1,43 +1,53 @@
 package com.suliborski.planetbound.logic.states;
 
 import com.suliborski.planetbound.logic.GalaxyData;
-import com.suliborski.planetbound.logic.data.Planet;
 
 public class OnPlanetState extends StateAdapter {
 
 
     public OnPlanetState(GalaxyData galaxyData) {
         super(galaxyData);
-
     }
 
     @Override
-    public IState travelToLandable() {
+    public IState travelToNextPlanet() {
         return new AcceptTravelConsequencesState(galaxyData);
     }
 
     @Override
-    public IState buyEnergyShield() {
-        galaxyData.getShip().buyEnergyShield();
+    public IState visitSpaceStation() {
+        return new OnSpaceStationState(galaxyData);
+    }
+
+
+    @Override
+    public IState goOnExpedition() {
+        if (!galaxyData.getPlanet().getResourceIds().isEmpty() && galaxyData.getShip().getCrew() >= 3) {
+            galaxyData.getExpedition().prepareExpedition(galaxyData.getPlanet());
+            return new OnExpeditionState(galaxyData);
+        } else
+            return this;
+    }
+
+    @Override
+    public IState produceEnergyShield() {
+        if (galaxyData.getShip().getCrew() >= 6)
+            galaxyData.getShip().produceEnergyShield();
         return this;
     }
 
     @Override
-    public IState buyAmmo() {
-        galaxyData.getShip().buyAmmo();
+    public IState produceAmmo() {
+        if (galaxyData.getShip().getCrew() >= 6)
+            galaxyData.getShip().produceAmmo();
         return this;
     }
 
     @Override
-    public IState buyFuel() {
-        galaxyData.getShip().buyFuel();
+    public IState produceFuel() {
+        if (galaxyData.getShip().getCrew() >= 6)
+            galaxyData.getShip().produceFuel();
         return this;
-    }
-
-    @Override
-    public IState explorePlanet() {
-        galaxyData.getPlanetBoard().prepareBoard(((Planet) galaxyData.getLandable()).getType());
-        return new OnExpeditionState(galaxyData);
     }
 
     @Override

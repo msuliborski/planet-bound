@@ -1,24 +1,31 @@
 package com.suliborski.planetbound.logic.states;
 
-import com.suliborski.planetbound.logic.data.Event;
-
 public interface IState {
 
     IState selectShip(String type);
-    IState travelToLandable();
+
+    IState travelToNextPlanet();
     IState acceptTravelConsequences();
-    IState buyEnergyShield();
-    IState buyAmmo();
-    IState buyFuel();
+
+    IState visitSpaceStation();
+    IState convertResource(String type, String into);
+    IState fullFixEnergyShields();
     IState buyDrone();
     IState upgradeCargoCapacity();
     IState upgradeWeaponSystem();
     IState recruitCrewMember();
-    IState explorePlanet();
+    IState leaveSpaceStation();
+
+    IState goOnExpedition();
     IState moveUp();
     IState moveDown();
     IState moveLeft();
     IState moveRight();
+
+    IState produceEnergyShield();
+    IState produceAmmo();
+    IState produceFuel();
+
     IState playAgain();
     IState saveGame();
     IState loadGame();
