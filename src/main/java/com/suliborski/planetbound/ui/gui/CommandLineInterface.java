@@ -1,8 +1,6 @@
 package com.suliborski.planetbound.ui.gui;
 
 import com.suliborski.planetbound.logic.GalaxyLogic;
-import com.suliborski.planetbound.logic.data.Alien;
-import com.suliborski.planetbound.logic.data.Drone;
 import com.suliborski.planetbound.logic.states.*;
 
 import java.util.Scanner;
@@ -147,8 +145,13 @@ public class CommandLineInterface {
 
     private void drawBoard() {
 
-        Alien alien = galaxyLogic.getGalaxyData().getExpedition().getAlien();
-        Drone drone = galaxyLogic.getGalaxyData().getExpedition().getDrone();
+        int alienX = galaxyLogic.getGalaxyData().getExpedition().getAlien().getX();
+        int alienY = galaxyLogic.getGalaxyData().getExpedition().getAlien().getY();
+        int alienHealth = galaxyLogic.getGalaxyData().getExpedition().getAlien().getHealth();
+
+        int droneX = galaxyLogic.getGalaxyData().getExpedition().getDrone().getX();
+        int droneY = galaxyLogic.getGalaxyData().getExpedition().getDrone().getY();
+        int droneHealth = galaxyLogic.getGalaxyData().getExpedition().getDrone().getHealth();
 
         System.out.println("==============");
         System.out.print("  ");
@@ -159,8 +162,8 @@ public class CommandLineInterface {
         for (int i = 0; i < 6; i++) {
             System.out.print(i+1 + " ");
             for (int j = 0; j < 6; j++) {
-                if (alien.getHealth() >= 1 && alien.getX() == j && alien.getY() == i) System.out.print("A ");
-                else if (drone.getX() == j && drone.getY() == i) System.out.print(galaxyLogic.getGalaxyData().getExpedition().getDrone().getHealth() + " ");
+                if (alienHealth >= 1 && alienX == j && alienY == i) System.out.print("A ");
+                else if (droneX == j && droneY == i) System.out.print(droneHealth + " ");
                 else if (galaxyLogic.getGalaxyData().getExpedition().getLandingPlaceX() == j && galaxyLogic.getGalaxyData().getExpedition().getLandingPlaceY() == i) System.out.print("L ");
                 else if (galaxyLogic.getGalaxyData().getExpedition().getResourceX() == j && galaxyLogic.getGalaxyData().getExpedition().getResourceY() == i && !galaxyLogic.getGalaxyData().getExpedition().getDrone().isCargoLoaded() ) System.out.print("R ");
                 else System.out.print("- ");
@@ -171,20 +174,20 @@ public class CommandLineInterface {
     }
 
     private void acceptTravelConsequences(){
-        if (galaxyLogic.getGalaxyData().getEvent() == null)
+        if (galaxyLogic.getGalaxyData().getEventType() == null)
             System.out.println("You are travelling through a wormhole!\n" +
                     "Travel cost is 3 fuel cells and 2 shield cells\n" +
                     "If you have the fuel, but not the shield cells, you will lose a crew member\n" +
                     "If you don’t have a Shield System Officer, costs increase by 1 fuel cell and 2 shield cells");
         else {
             System.out.println("You are not travelling through a wormhole! Travel cost is 1 fuel cell.");
-            switch (galaxyLogic.getGalaxyData().getEvent().getType()){
-                case "crew-death": System.out.println("In addition, a crew member is injured due to a system malfunction. You lose one crew member."); break;
-                case "salvage-ship": System.out.println("In addition, your ship comes across an abandoned ship and you find 1-6 of a random resource."); break;
-                case "cargo-loss": System.out.println("In addition, a cargo mishap causes you to lose 1-3 of one of your resources."); break;
-                case "fuel-loss": System.out.println("In addition, you accidentally use too much fuel in a test run. You lose 1 fuel cell"); break;
-                case "no-event": System.out.println("And your travel was without any troubles."); break;
-                case "crew-rescue": System.out.println("In addition, you find a ship with a survivor and you gain 1 crew member if possible."); break;
+            switch (galaxyLogic.getGalaxyData().getEventType()){
+                case crewDeath: System.out.println("In addition, a crew member is injured due to a system malfunction. You lose one crew member."); break;
+                case salvageShip: System.out.println("In addition, your ship comes across an abandoned ship and you find 1-6 of a random resource."); break;
+                case cargoLoss: System.out.println("In addition, a cargo mishap causes you to lose 1-3 of one of your resources."); break;
+                case fuelLoss: System.out.println("In addition, you accidentally use too much fuel in a test run. You lose 1 fuel cell"); break;
+                case noEvent: System.out.println("And your travel was without any troubles."); break;
+                case crewRescue: System.out.println("In addition, you find a ship with a survivor and you gain 1 crew member if possible."); break;
             }
         }
 

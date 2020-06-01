@@ -1,15 +1,11 @@
 package com.suliborski.planetbound.logic.data;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@Data
-public class Planet {
-
+public class Planet implements Serializable {
     private String type;
     List<String> resourceIds = new ArrayList<>();
     private boolean spaceStationAvailable;
@@ -38,6 +34,28 @@ public class Planet {
         }
     }
 
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public List<String> getResourceIds() {
+        return resourceIds;
+    }
+    public void setResourceIds(List<String> resourceIds) {
+        this.resourceIds = resourceIds;
+    }
+
+    public boolean isSpaceStationAvailable() {
+        return spaceStationAvailable;
+    }
+
+    public void setSpaceStationAvailable(boolean spaceStationAvailable) {
+        this.spaceStationAvailable = spaceStationAvailable;
+    }
+
     public String getRandomResource(){
         String randomResource = resourceIds.get(new Random().nextInt(resourceIds.size()));
         resourceIds.remove(randomResource);
@@ -51,7 +69,4 @@ public class Planet {
     public boolean isExplorable(){
         return !resourceIds.isEmpty();
     }
-
-
-
 }

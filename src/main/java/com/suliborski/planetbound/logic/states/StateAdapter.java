@@ -2,8 +2,9 @@ package com.suliborski.planetbound.logic.states;
 
 import com.suliborski.planetbound.logic.GalaxyData;
 
-public class StateAdapter implements IState {
+import java.io.Serializable;
 
+public class StateAdapter implements IState, Serializable {
     GalaxyData galaxyData;
 
     public StateAdapter(GalaxyData galaxyData) {
@@ -112,17 +113,7 @@ public class StateAdapter implements IState {
 
     @Override
     public IState playAgain() {
-        return this;
-    }
-
-    @Override
-    public IState saveGame() {
-        return this;
-    }
-
-    @Override
-    public IState loadGame() {
-        return this;
+        return new ShipSelectionState(galaxyData);
     }
 
     @Override

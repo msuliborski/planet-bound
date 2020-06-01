@@ -2,16 +2,12 @@ package com.suliborski.planetbound.logic;
 
 import com.suliborski.planetbound.logic.states.IState;
 import com.suliborski.planetbound.logic.states.ShipSelectionState;
-import lombok.Getter;
-import lombok.Setter;
 
+import java.io.*;
 
 public class GalaxyLogic {
-
-    @Getter @Setter
     private IState state;
 
-    @Getter @Setter
     private GalaxyData galaxyData;
 
     public GalaxyLogic() {
@@ -19,101 +15,116 @@ public class GalaxyLogic {
         state = new ShipSelectionState(galaxyData);
     }
 
+    public IState getState() {
+        return state;
+    }
+
+    public GalaxyData getGalaxyData() {
+        return galaxyData;
+    }
+
     public void selectShip(String type){
-        this.setState(this.state.selectShip(type));
+        this.state = this.state.selectShip(type);
     }
 
 
     public void  travelToNextPlanet(){
-        this.setState(this.state.travelToNextPlanet());
+        this.state = this.state.travelToNextPlanet();
     }
 
     public void  acceptTravelConsequences(){
-        this.setState(this.state.acceptTravelConsequences());
+        this.state = this.state.acceptTravelConsequences();
     }
 
 
     public void  visitSpaceStation(){
-        this.setState(this.state.visitSpaceStation());
+        this.state = this.state.visitSpaceStation();
     }
 
     public void convertResource(String type, String into) {
-        this.setState(this.state.convertResource(type, into));
+        this.state = this.state.convertResource(type, into);
     }
 
     public void fullFixEnergyShields() {
-        this.setState(this.state.fullFixEnergyShields());
+        this.state = this.state.fullFixEnergyShields();
     }
 
     public void  buyDrone(){
-        this.setState(this.state.buyDrone());
+        this.state = this.state.buyDrone();
     }
 
     public void  upgradeCargoCapacity(){
-        this.setState(this.state.upgradeCargoCapacity());
+        this.state = this.state.upgradeCargoCapacity();
     }
 
     public void  upgradeWeaponSystem(){
-        this.setState(this.state.upgradeWeaponSystem());
+        this.state = this.state.upgradeWeaponSystem();
     }
 
     public void  recruitCrewMember(){
-        this.setState(this.state.recruitCrewMember());
+        this.state = this.state.recruitCrewMember();
     }
 
     public void  leaveSpaceStation(){
-        this.setState(this.state.leaveSpaceStation());
+        this.state = this.state.leaveSpaceStation();
     }
 
 
     public void goOnExpedition(){
-        this.setState(this.state.goOnExpedition());
+        this.state = this.state.goOnExpedition();
     }
 
     public void  moveUp(){
-        this.setState(this.state.moveUp());
+        this.state = this.state.moveUp();
     }
 
     public void  moveDown(){
-        this.setState(this.state.moveDown());
+        this.state = this.state.moveDown();
     }
 
     public void  moveLeft(){
-        this.setState(this.state.moveLeft());
+        this.state = this.state.moveLeft();
     }
 
     public void  moveRight(){
-        this.setState(this.state.moveRight());
+        this.state = this.state.moveRight();
     }
 
 
     public void produceEnergyShield(){
-        this.setState(this.state.produceEnergyShield());
+        this.state = this.state.produceEnergyShield();
     }
 
     public void produceAmmo(){
-        this.setState(this.state.produceAmmo());
+        this.state = this.state.produceAmmo();
     }
 
     public void produceFuel(){
-        this.setState(this.state.produceFuel());
+        this.state = this.state.produceFuel();
     }
 
 
     public void  playAgain(){
-        this.setState(this.state.playAgain());
+        this.state = this.state.playAgain();
     }
 
-    public void  saveGame(){
-        this.setState(this.state.saveGame());
+    public void  saveGame(String fileName){
+        galaxyData.setState(this.state);
+        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("saves/" + fileName + ".pbs"))) {
+            out.writeObject(galaxyData);
+            System.out.println("Object has been serialized");
+        } catch(IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
-    public void  loadGame(){
-        this.setState(this.state.loadGame());
+    public void  loadGame(String fileName){
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("saves/" + fileName + ".pbs"))) {
+            this.galaxyData = (GalaxyData) in.readObject();
+            System.out.println("Object has been deserialized ");
+        } catch(IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        this.state =  galaxyData.getState();
     }
-
-    public void  exitGame(){
-        this.setState(this.state.exitGame());
-    }
-
 }

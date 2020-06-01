@@ -27,9 +27,5 @@ public interface IState {
     IState produceFuel();
 
     IState playAgain();
-    IState saveGame();
-    IState loadGame();
     IState exitGame();
-
-
 }

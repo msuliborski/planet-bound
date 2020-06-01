@@ -6,10 +6,6 @@ public class GameWonState extends StateAdapter {
 
     public GameWonState(GalaxyData galaxyData) {
         super(galaxyData);
-    }
-
-    @Override
-    public IState playAgain(){
-        return new ShipSelectionState(galaxyData);
+        System.out.println("Into GameWon State");
     }
 }

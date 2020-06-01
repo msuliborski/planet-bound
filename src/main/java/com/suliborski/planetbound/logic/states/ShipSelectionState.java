@@ -5,9 +5,9 @@ import com.suliborski.planetbound.logic.data.Ship;
 
 public class ShipSelectionState extends StateAdapter {
 
-
     public ShipSelectionState(GalaxyData galaxyData) {
         super(galaxyData);
+        System.out.println("Into ShipSelection State");
     }
 
     @Override

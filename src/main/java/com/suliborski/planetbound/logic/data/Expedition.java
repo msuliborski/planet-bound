@@ -1,14 +1,8 @@
 package com.suliborski.planetbound.logic.data;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.io.Serializable;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Expedition {
-
+public class Expedition implements Serializable {
     private Alien alien;
     private Drone drone;
 
@@ -19,12 +13,44 @@ public class Expedition {
     private int resourceX;
     private int resourceY;
 
-    private int waitTimeForAlien = 999; //change
+    private int waitTimeForAlien = 999;
 
-    Planet planet;
+    public Alien getAlien() {
+        return alien;
+    }
+
+    public Drone getDrone() {
+        return drone;
+    }
+
+    public int getLandingPlaceX() {
+        return landingPlaceX;
+    }
+
+    public int getLandingPlaceY() {
+        return landingPlaceY;
+    }
+
+    public String getResourceType() {
+        return resourceType;
+    }
+
+    public int getResourceX() {
+        return resourceX;
+    }
+
+    public int getResourceY() {
+        return resourceY;
+    }
+
+    public int getWaitTimeForAlien() {
+        return waitTimeForAlien;
+    }
+    public void setWaitTimeForAlien(int waitTimeForAlien) {
+        this.waitTimeForAlien = waitTimeForAlien;
+    }
 
     public void prepareExpedition(Planet planet) {
-
         landingPlaceX = (int) Math.floor(Math.random() * 3);
         landingPlaceY = (int) Math.floor(Math.random() * 3);
         drone = new Drone(6, landingPlaceX, landingPlaceY);
@@ -34,11 +60,11 @@ public class Expedition {
         resourceX = (int) Math.floor(Math.random() * 3 + 3);
         resourceY = (int) Math.floor(Math.random() * 3 + 3);
         resourceType = planet.getRandomResource();
+
+        System.out.println("Expedition prepared.");
     }
 
     public void spawnAlien() {
-
-
         int alienX = drone.getX();
         int alienY = drone.getY();
 
@@ -53,6 +79,7 @@ public class Expedition {
         else if (r == 3) alien = new Alien("blue", 1, alienX, alienY);
         else alien = new Alien("black", 1, alienX, alienY);
         alien.setHealth(1);
+        System.out.println("Alien spawned.");
     }
 
     public void moveDrone(String direction) {
@@ -66,14 +93,17 @@ public class Expedition {
         else if (direction.equals("right") && drone.getX() < 5)
             drone.setX(drone.getX() + 1);
 
+        System.out.println("Drone moved");
 
         if (drone.getX() == resourceX && drone.getY() == resourceY) {
             drone.setCargoLoaded(true);
             drone.setCargoType(resourceType);
+            System.out.println("Drone took resource");
         }
 
         if (drone.getX() == landingPlaceX && drone.getY() == landingPlaceY && drone.isCargoLoaded()) {
             drone.setBackWithCargo(true);
+            System.out.println("Drone is back with resource");
             return;
         }
 
@@ -107,6 +137,7 @@ public class Expedition {
                 else
                     alien.setY(alien.getY() - 1);
             }
+            System.out.println("Alien moved");
 
             if (checkIfInRange(drone.getX(), drone.getY(), alien.getX(), alien.getY()))
                 fight("alien");
@@ -120,25 +151,35 @@ public class Expedition {
 
     private void fight(String initiator) {
         if (initiator.equals("drone")) {
+            System.out.println("Drone attacks");
             if (Math.random() <= 0.333333d) {
                 alien.setHealth(0);
                 waitTimeForAlien = (int) Math.floor(Math.random() * 6 + 1);
+                System.out.println("Drone destroyed alien");
                 return;
-            }
+            } else System.out.println("Drone missed");
         }
 
         while (drone.getHealth() != 0 && alien.getHealth() != 0) {
+            System.out.println("Alien attacks");
             if (alien.getType().equals("black")) { //alien attacks
-                if (Math.random() <= 0.166666d) drone.setHealth(drone.getHealth() - 1);
+                if (Math.random() <= 0.166666d) { drone.setHealth(drone.getHealth() - 1); System.out.println("Alien damaged drone"); }
+                else System.out.println("Alien missed");
             } else {
-                if (Math.random() <= 0.333333d) drone.setHealth(drone.getHealth() - 1);
+                if (Math.random() <= 0.333333d) { drone.setHealth(drone.getHealth() - 1); System.out.println("Alien damaged drone"); }
+                else System.out.println("Alien missed");
             }
-            if (drone.getHealth() == 0) break;
+            if (drone.getHealth() == 0) {
+                System.out.println("Drone destroyed");
+                break;
+            }
 
+            System.out.println("Drone attacks");
             if (Math.random() <= 0.333333d) { //drone attacks
                 alien.setHealth(0);
+                System.out.println("Drone destroyed alien");
                 waitTimeForAlien = (int) Math.floor(Math.random() * 6 + 1);
-            }
+            } else System.out.println("Drone missed");
         }
     }
 }

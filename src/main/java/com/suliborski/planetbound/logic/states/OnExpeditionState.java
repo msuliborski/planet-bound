@@ -6,6 +6,7 @@ public class OnExpeditionState extends StateAdapter {
     
     public OnExpeditionState(GalaxyData galaxyData) {
         super(galaxyData);
+        System.out.println("Into OnExpeditionState State");
     }
 
     @Override

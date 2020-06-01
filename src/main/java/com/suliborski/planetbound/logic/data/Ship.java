@@ -1,12 +1,8 @@
 package com.suliborski.planetbound.logic.data;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import java.io.Serializable;
 
-@Data
-@AllArgsConstructor
-public class Ship {
-
+public class Ship implements Serializable {
     private String type;
     private int crew;
     private int fuel;
@@ -33,6 +29,216 @@ public class Ship {
 
     private boolean isDroneWorking;
 
+    public Ship(String type, int crew, int fuel, int shields, int ammo, int crewCapacity, int fuelCapacity, int shieldsCapacity, int ammoCapacity, int artifacts, int redCargo, int greenCargo, int blueCargo, int blackCargo, int redCargoCapacity, int greenCargoCapacity, int blueCargoCapacity, int blackCargoCapacity, int cargoLevel, int maxCargoLevel, int weaponSystemLevel, int maxWeaponSystemLevel, boolean isDroneWorking) {
+        this.type = type;
+        this.crew = crew;
+        this.fuel = fuel;
+        this.shields = shields;
+        this.ammo = ammo;
+        this.crewCapacity = crewCapacity;
+        this.fuelCapacity = fuelCapacity;
+        this.shieldsCapacity = shieldsCapacity;
+        this.ammoCapacity = ammoCapacity;
+        this.artifacts = artifacts;
+        this.redCargo = redCargo;
+        this.greenCargo = greenCargo;
+        this.blueCargo = blueCargo;
+        this.blackCargo = blackCargo;
+        this.redCargoCapacity = redCargoCapacity;
+        this.greenCargoCapacity = greenCargoCapacity;
+        this.blueCargoCapacity = blueCargoCapacity;
+        this.blackCargoCapacity = blackCargoCapacity;
+        this.cargoLevel = cargoLevel;
+        this.maxCargoLevel = maxCargoLevel;
+        this.weaponSystemLevel = weaponSystemLevel;
+        this.maxWeaponSystemLevel = maxWeaponSystemLevel;
+        this.isDroneWorking = isDroneWorking;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getCrew() {
+        return crew;
+    }
+
+    public void setCrew(int crew) {
+        this.crew = crew;
+    }
+
+    public int getFuel() {
+        return fuel;
+    }
+
+    public void setFuel(int fuel) {
+        this.fuel = fuel;
+    }
+
+    public int getShields() {
+        return shields;
+    }
+
+    public void setShields(int shields) {
+        this.shields = shields;
+    }
+
+    public int getAmmo() {
+        return ammo;
+    }
+
+    public void setAmmo(int ammo) {
+        this.ammo = ammo;
+    }
+
+    public int getCrewCapacity() {
+        return crewCapacity;
+    }
+
+    public void setCrewCapacity(int crewCapacity) {
+        this.crewCapacity = crewCapacity;
+    }
+
+    public int getFuelCapacity() {
+        return fuelCapacity;
+    }
+
+    public void setFuelCapacity(int fuelCapacity) {
+        this.fuelCapacity = fuelCapacity;
+    }
+
+    public int getShieldsCapacity() {
+        return shieldsCapacity;
+    }
+
+    public void setShieldsCapacity(int shieldsCapacity) {
+        this.shieldsCapacity = shieldsCapacity;
+    }
+
+    public int getAmmoCapacity() {
+        return ammoCapacity;
+    }
+
+    public void setAmmoCapacity(int ammoCapacity) {
+        this.ammoCapacity = ammoCapacity;
+    }
+
+    public int getArtifacts() {
+        return artifacts;
+    }
+
+    public void setArtifacts(int artifacts) {
+        this.artifacts = artifacts;
+    }
+
+    public int getRedCargo() {
+        return redCargo;
+    }
+
+    public void setRedCargo(int redCargo) {
+        this.redCargo = redCargo;
+    }
+
+    public int getGreenCargo() {
+        return greenCargo;
+    }
+
+    public void setGreenCargo(int greenCargo) {
+        this.greenCargo = greenCargo;
+    }
+
+    public int getBlueCargo() {
+        return blueCargo;
+    }
+
+    public void setBlueCargo(int blueCargo) {
+        this.blueCargo = blueCargo;
+    }
+
+    public int getBlackCargo() {
+        return blackCargo;
+    }
+
+    public void setBlackCargo(int blackCargo) {
+        this.blackCargo = blackCargo;
+    }
+
+    public int getRedCargoCapacity() {
+        return redCargoCapacity;
+    }
+
+    public void setRedCargoCapacity(int redCargoCapacity) {
+        this.redCargoCapacity = redCargoCapacity;
+    }
+
+    public int getGreenCargoCapacity() {
+        return greenCargoCapacity;
+    }
+
+    public void setGreenCargoCapacity(int greenCargoCapacity) {
+        this.greenCargoCapacity = greenCargoCapacity;
+    }
+
+    public int getBlueCargoCapacity() {
+        return blueCargoCapacity;
+    }
+
+    public void setBlueCargoCapacity(int blueCargoCapacity) {
+        this.blueCargoCapacity = blueCargoCapacity;
+    }
+
+    public int getBlackCargoCapacity() {
+        return blackCargoCapacity;
+    }
+
+    public void setBlackCargoCapacity(int blackCargoCapacity) {
+        this.blackCargoCapacity = blackCargoCapacity;
+    }
+
+    public int getCargoLevel() {
+        return cargoLevel;
+    }
+
+    public void setCargoLevel(int cargoLevel) {
+        this.cargoLevel = cargoLevel;
+    }
+
+    public int getMaxCargoLevel() {
+        return maxCargoLevel;
+    }
+
+    public void setMaxCargoLevel(int maxCargoLevel) {
+        this.maxCargoLevel = maxCargoLevel;
+    }
+
+    public int getWeaponSystemLevel() {
+        return weaponSystemLevel;
+    }
+
+    public void setWeaponSystemLevel(int weaponSystemLevel) {
+        this.weaponSystemLevel = weaponSystemLevel;
+    }
+
+    public int getMaxWeaponSystemLevel() {
+        return maxWeaponSystemLevel;
+    }
+
+    public void setMaxWeaponSystemLevel(int maxWeaponSystemLevel) {
+        this.maxWeaponSystemLevel = maxWeaponSystemLevel;
+    }
+
+    public boolean isDroneWorking() {
+        return isDroneWorking;
+    }
+
+    public void setDroneWorking(boolean droneWorking) {
+        isDroneWorking = droneWorking;
+    }
+
     public void addResource(String type, int amount) {
         switch (type) {
             case "red": redCargo = Math.min(redCargo + amount, redCargoCapacity); break;
@@ -41,29 +247,33 @@ public class Ship {
             case "black": blackCargo = Math.min(blackCargo + amount, blackCargoCapacity); break;
             case "artifact": artifacts += amount; break;
         }
+        System.out.println("Resource(s) added");
     }
 
     public boolean removeResource(String type, int amount, boolean forceRemoval) { //if force true, you must have needed resources
+
         switch (type) {
             case "red":
                 if (forceRemoval && redCargo - amount < 0) return false;
-                else redCargo = Math.max(redCargo - amount, 0); return true;
+                else redCargo = Math.max(redCargo - amount, 0); { System.out.println("Red resource(s) removed"); return true; }
             case "green":
                 if (forceRemoval && greenCargo - amount < 0) return false;
-                else greenCargo = Math.max(greenCargo - amount, 0); return true;
+                else greenCargo = Math.max(greenCargo - amount, 0); { System.out.println("Green resource(s) removed"); return true; }
             case "blue":
                 if (forceRemoval && blueCargo - amount < 0) return false;
-                else blueCargo = Math.max(blueCargo - amount, 0); return true;
+                else blueCargo = Math.max(blueCargo - amount, 0); { System.out.println("Blue resource(s) removed"); return true; }
             case "black":
                 if (forceRemoval && blackCargo - amount < 0) return false;
-                else blackCargo = Math.max(blackCargo - amount, 0); return true;
+                else blackCargo = Math.max(blackCargo - amount, 0); { System.out.println("Black resource(s) removed"); return true; }
         }
         return false;
     }
 
     public void convertResource(String type, String into){
-        if (removeResource(type, 1, true))
+        if (removeResource(type, 1, true)) {
             addResource(into, 1);
+            System.out.println("Resource(s) converted");
+        }
     }
 
     public void produceEnergyShield() {
@@ -72,6 +282,7 @@ public class Ship {
             removeResource("green", 1, true);
             removeResource("blue", 1, true);
             setShields(getShields() + 1);
+            System.out.println("Energy shield produced");
         }
     }
     
@@ -80,6 +291,7 @@ public class Ship {
             removeResource("black", 1, true);
             removeResource("blue", 1, true);
             setAmmo(getAmmo() + 1);
+            System.out.println("Ammo produced");
         }
     }
 
@@ -89,6 +301,7 @@ public class Ship {
             removeResource("red", 1, true);
             removeResource("blue", 1, true);
             setFuel(getFuel() + 1);
+            System.out.println("Fuel produced");
         }
     }
 
@@ -99,6 +312,7 @@ public class Ship {
             removeResource("blue", 2, true);
             removeResource("green", 2, true);
             setDroneWorking(true);
+            System.out.println("Drone bought");
         }
     }
 
@@ -109,6 +323,11 @@ public class Ship {
             removeResource("blue", 1, true);
             removeResource("green", 1, true);
             setCargoLevel(getCargoLevel() + 1);
+            setRedCargoCapacity(getRedCargoCapacity() + 6);
+            setGreenCargoCapacity(getGreenCargoCapacity() + 6);
+            setBlueCargoCapacity(getBlueCargoCapacity() + 6);
+            setBlackCargoCapacity(getBlackCargoCapacity() + 6);
+            System.out.println("Cargo upgraded");
         }
     }
 
@@ -118,7 +337,9 @@ public class Ship {
             removeResource("red", 2, true);
             removeResource("blue", 2, true);
             removeResource("green", 2, true);
-            setCargoLevel(getCargoLevel() + 1);
+            setWeaponSystemLevel(getCargoLevel() + 1);
+            setAmmoCapacity(getAmmoCapacity() + 9);
+            System.out.println("Weapon system upgraded");
         }
     }
 
@@ -129,6 +350,7 @@ public class Ship {
             removeResource("blue", 1, true);
             removeResource("green", 1, true);
             setCrew(getCrew() + 1);
+            System.out.println("New member recruited");
         }
     }
 
@@ -139,6 +361,7 @@ public class Ship {
             removeResource("blue", 1, true);
             removeResource("green", 1, true);
             shields = shieldsCapacity;
+            System.out.println("Shield fully fixed");
         }
     }
 }

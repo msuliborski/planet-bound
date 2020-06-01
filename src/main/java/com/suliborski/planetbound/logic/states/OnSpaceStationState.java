@@ -4,9 +4,9 @@ import com.suliborski.planetbound.logic.GalaxyData;
 
 public class OnSpaceStationState extends StateAdapter {
 
-
     public OnSpaceStationState(GalaxyData galaxyData) {
         super(galaxyData);
+        System.out.println("Into OnSpaceStation State");
     }
 
     @Override
@@ -47,6 +47,7 @@ public class OnSpaceStationState extends StateAdapter {
 
     @Override
     public IState leaveSpaceStation() {
+        System.out.println("Wants to leave space station");
         return new OnPlanetState(galaxyData);
     }
 }
