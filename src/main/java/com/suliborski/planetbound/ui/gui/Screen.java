@@ -291,7 +291,6 @@ public class Screen implements Initializable {
     @FXML
     void button7Click(){
         if (galaxyLogic.getState() instanceof OnSpaceStationState) galaxyLogic.leaveSpaceStation();
-        //else if (galaxyLogic.getState() instanceof OnPlanetState) galaxyLogic.goOnExpedition();
 
         updateStatus(true);
         updateView();
@@ -328,11 +327,11 @@ public class Screen implements Initializable {
         button2.setVisible(true);
         button2.setText("Go on expedition");
         button3.setVisible(true);
-        button3.setText("Produce 1 energy shield (1 GREEN, 1 BLUE, 1 BLACK)");
+        button3.setText("Produce 1 energy shield \n(1 GREEN, 1 BLUE, 1 BLACK)");
         button4.setVisible(true);
-        button4.setText("Produce 1 ammo (1 BLUE, 1 BLACK)");
+        button4.setText("Produce 1 ammo \n(1 BLUE, 1 BLACK)");
         button5.setVisible(true);
-        button5.setText("Produce 1 fuel (1 RED, 1 GREEN, 1 BLACK)");
+        button5.setText("Produce 1 fuel \n(1 RED, 1 GREEN, 1 BLACK)");
         if (galaxyLogic.getGalaxyData().getPlanet().isSpaceStationAvailable()) {
             button6.setVisible(true);
             button6.setText("Go to Space Station");
@@ -345,15 +344,15 @@ public class Screen implements Initializable {
         button1.setText("Convert resource");
         toText.setVisible(true);
         button2.setVisible(true);
-        button2.setText("Fully fix energy shields (1 RED, 1 GREEN, 1 BLUE, 1 BLACK)");
+        button2.setText("Fully fix energy shields \n(1 RED, 1 GREEN, 1 BLUE, 1 BLACK)");
         button3.setVisible(true);
-        button3.setText("Buy a new drone (3 RED, 3 GREEN, 3 BLUE, 3 BLACK)");
+        button3.setText("Buy a new drone \n(3 RED, 3 GREEN, 3 BLUE, 3 BLACK)");
         button4.setVisible(true);
-        button4.setText("Upgrade cargo (1 RED, 1 GREEN, 1 BLUE, 1 BLACK)");
+        button4.setText("Upgrade cargo \n(1 RED, 1 GREEN, 1 BLUE, 1 BLACK)");
         button5.setVisible(true);
-        button5.setText("Upgrade weapon system (2 RED, 2 GREEN, 2 BLUE, 2 BLACK)");
+        button5.setText("Upgrade weapon system \n(2 RED, 2 GREEN, 2 BLUE, 2 BLACK)");
         button6.setVisible(true);
-        button6.setText("Recruit new crew member (1 RED, 1 GREEN, 1 BLUE, 1 BLACK)");
+        button6.setText("Recruit new crew member \n(1 RED, 1 GREEN, 1 BLUE, 1 BLACK)");
         button7.setVisible(true);
         button7.setText("Leave Space Station");
 
