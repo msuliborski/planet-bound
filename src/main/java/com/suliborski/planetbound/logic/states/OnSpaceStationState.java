@@ -1,12 +1,13 @@
 package com.suliborski.planetbound.logic.states;
 
 import com.suliborski.planetbound.logic.GalaxyData;
+import com.suliborski.planetbound.logic.data.Log;
 
 public class OnSpaceStationState extends StateAdapter {
 
     public OnSpaceStationState(GalaxyData galaxyData) {
         super(galaxyData);
-        System.out.println("Into OnSpaceStation State");
+        GalaxyData.addLog(new Log("Into OnSpaceStation State"));
     }
 
     @Override
@@ -47,7 +48,7 @@ public class OnSpaceStationState extends StateAdapter {
 
     @Override
     public IState leaveSpaceStation() {
-        System.out.println("Wants to leave space station");
+        GalaxyData.addLog(new Log("Wants to leave space station"));
         return new OnPlanetState(galaxyData);
     }
 }

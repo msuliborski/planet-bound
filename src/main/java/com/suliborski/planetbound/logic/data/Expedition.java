@@ -1,5 +1,7 @@
 package com.suliborski.planetbound.logic.data;
 
+import com.suliborski.planetbound.logic.GalaxyData;
+
 import java.io.Serializable;
 
 public class Expedition implements Serializable {
@@ -61,7 +63,7 @@ public class Expedition implements Serializable {
         resourceY = (int) Math.floor(Math.random() * 3 + 3);
         resourceType = planet.getRandomResource();
 
-        System.out.println("Expedition prepared.");
+        GalaxyData.addLog(new Log("Expedition prepared."));
     }
 
     public void spawnAlien() {
@@ -79,7 +81,7 @@ public class Expedition implements Serializable {
         else if (r == 3) alien = new Alien("blue", 1, alienX, alienY);
         else alien = new Alien("black", 1, alienX, alienY);
         alien.setHealth(1);
-        System.out.println("Alien spawned.");
+        GalaxyData.addLog(new Log("Alien spawned."));
     }
 
     public void moveDrone(String direction) {
@@ -93,17 +95,17 @@ public class Expedition implements Serializable {
         else if (direction.equals("right") && drone.getX() < 5)
             drone.setX(drone.getX() + 1);
 
-        System.out.println("Drone moved");
+        GalaxyData.addLog(new Log("Drone moved"));
 
         if (drone.getX() == resourceX && drone.getY() == resourceY) {
             drone.setCargoLoaded(true);
             drone.setCargoType(resourceType);
-            System.out.println("Drone took resource");
+            GalaxyData.addLog(new Log("Drone took resource"));
         }
 
         if (drone.getX() == landingPlaceX && drone.getY() == landingPlaceY && drone.isCargoLoaded()) {
             drone.setBackWithCargo(true);
-            System.out.println("Drone is back with resource");
+            GalaxyData.addLog(new Log("Drone is back with resource"));
             return;
         }
 
@@ -137,7 +139,7 @@ public class Expedition implements Serializable {
                 else
                     alien.setY(alien.getY() - 1);
             }
-            System.out.println("Alien moved");
+            GalaxyData.addLog(new Log("Alien moved"));
 
             if (checkIfInRange(drone.getX(), drone.getY(), alien.getX(), alien.getY()))
                 fight("alien");
@@ -151,35 +153,35 @@ public class Expedition implements Serializable {
 
     private void fight(String initiator) {
         if (initiator.equals("drone")) {
-            System.out.println("Drone attacks");
+            GalaxyData.addLog(new Log("Drone attacks"));
             if (Math.random() <= 0.333333d) {
                 alien.setHealth(0);
                 waitTimeForAlien = (int) Math.floor(Math.random() * 6 + 1);
-                System.out.println("Drone destroyed alien");
+                GalaxyData.addLog(new Log("Drone destroyed alien"));
                 return;
-            } else System.out.println("Drone missed");
+            } else GalaxyData.addLog(new Log("Drone missed"));
         }
 
         while (drone.getHealth() != 0 && alien.getHealth() != 0) {
-            System.out.println("Alien attacks");
+            GalaxyData.addLog(new Log("Alien attacks"));
             if (alien.getType().equals("black")) { //alien attacks
-                if (Math.random() <= 0.166666d) { drone.setHealth(drone.getHealth() - 1); System.out.println("Alien damaged drone"); }
-                else System.out.println("Alien missed");
+                if (Math.random() <= 0.166666d) { drone.setHealth(drone.getHealth() - 1); GalaxyData.addLog(new Log("Alien damaged drone")); }
+                else GalaxyData.addLog(new Log("Alien missed"));
             } else {
-                if (Math.random() <= 0.333333d) { drone.setHealth(drone.getHealth() - 1); System.out.println("Alien damaged drone"); }
-                else System.out.println("Alien missed");
+                if (Math.random() <= 0.333333d) { drone.setHealth(drone.getHealth() - 1); GalaxyData.addLog(new Log("Alien damaged drone")); }
+                else GalaxyData.addLog(new Log("Alien missed"));
             }
             if (drone.getHealth() == 0) {
-                System.out.println("Drone destroyed");
+                GalaxyData.addLog(new Log("Drone destroyed"));
                 break;
             }
 
-            System.out.println("Drone attacks");
+            GalaxyData.addLog(new Log("Drone attacks"));
             if (Math.random() <= 0.333333d) { //drone attacks
                 alien.setHealth(0);
-                System.out.println("Drone destroyed alien");
+                GalaxyData.addLog(new Log("Drone destroyed alien"));
                 waitTimeForAlien = (int) Math.floor(Math.random() * 6 + 1);
-            } else System.out.println("Drone missed");
+            } else GalaxyData.addLog(new Log("Drone missed"));
         }
     }
 }

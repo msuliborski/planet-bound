@@ -1,5 +1,6 @@
 package com.suliborski.planetbound.logic;
 
+import com.suliborski.planetbound.logic.data.Log;
 import com.suliborski.planetbound.logic.states.IState;
 import com.suliborski.planetbound.logic.states.ShipSelectionState;
 
@@ -104,27 +105,45 @@ public class GalaxyLogic {
     }
 
 
-    public void  playAgain(){
+    public void playAgain(){
+        galaxyData.clearLogs();
         this.state = this.state.playAgain();
     }
 
-    public void  saveGame(String fileName){
+    public void saveGame(String fileName){
         galaxyData.setState(this.state);
-        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("saves/" + fileName + ".pbs"))) {
-            out.writeObject(galaxyData);
-            System.out.println("Object has been serialized");
+        try(ObjectOutputStream saveOut = new ObjectOutputStream(new FileOutputStream("saves/" + fileName + ".pbs"));
+            DataOutputStream logOut = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("saves/" + fileName + ".log")))) {
+            GalaxyData.addLog(new Log("Game has been saved to " + fileName + ".pbs file."));
+            GalaxyData.addLog(new Log("Log has been saved to " + fileName + ".log file."));
+            galaxyData.logsToPermanentLogs();
+            saveOut.writeObject(galaxyData);
+            logOut.writeUTF(galaxyData.getPermanentLogsString());
         } catch(IOException ex) {
             ex.printStackTrace();
         }
     }
 
-    public void  loadGame(String fileName){
+    public void loadGame(String fileName){
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("saves/" + fileName + ".pbs"))) {
+            galaxyData.clearLogs();
             this.galaxyData = (GalaxyData) in.readObject();
-            System.out.println("Object has been deserialized ");
+            GalaxyData.addLog(new Log("Game has been loaded from " + fileName + ".pbs"));
         } catch(IOException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
         this.state =  galaxyData.getState();
+    }
+
+    public void deleteGame(String fileName){
+        File pbsFile = new File("saves/" + fileName + ".pbs");
+        File logFile = new File("saves/" + fileName + ".log");
+
+        if(pbsFile.delete()) GalaxyData.addLog(new Log("Save file " + fileName + ".pbs deleted successfully"));
+         else GalaxyData.addLog(new Log("Failed to delete the save file " + fileName + ".pbs"));
+
+        if(logFile.delete()) GalaxyData.addLog(new Log("Log file " + fileName + ".log deleted successfully"));
+         else GalaxyData.addLog(new Log("Failed to delete the log file " + fileName + ".log"));
+
     }
 }

@@ -1,6 +1,7 @@
 package com.suliborski.planetbound.logic.states;
 
 import com.suliborski.planetbound.logic.GalaxyData;
+import com.suliborski.planetbound.logic.data.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +13,12 @@ public class AcceptTravelConsequencesState extends StateAdapter {
         super(galaxyData);
         galaxyData.preparePlanet();
         galaxyData.prepareEvent();
-        System.out.println("Into AcceptTravelConsequences State");
+        GalaxyData.addLog(new Log("Into AcceptTravelConsequences State"));
     }
 
     @Override
     public IState acceptTravelConsequences(){
-        System.out.println("Consequences of travel accepted");
+        GalaxyData.addLog(new Log("Consequences of travel accepted"));
         if (galaxyData.getEventType() == null) {
             int fuelCosts = 3;
             int shieldsCosts = 2;

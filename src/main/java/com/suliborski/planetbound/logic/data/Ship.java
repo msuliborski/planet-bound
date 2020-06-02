@@ -1,5 +1,7 @@
 package com.suliborski.planetbound.logic.data;
 
+import com.suliborski.planetbound.logic.GalaxyData;
+
 import java.io.Serializable;
 
 public class Ship implements Serializable {
@@ -247,24 +249,24 @@ public class Ship implements Serializable {
             case "black": blackCargo = Math.min(blackCargo + amount, blackCargoCapacity); break;
             case "artifact": artifacts += amount; break;
         }
-        System.out.println("Resource(s) added");
+        GalaxyData.addLog(new Log(amount + " " + type.toUpperCase() + " resource(s) added"));
     }
 
     public boolean removeResource(String type, int amount, boolean forceRemoval) { //if force true, you must have needed resources
 
         switch (type) {
             case "red":
-                if (forceRemoval && redCargo - amount < 0) return false;
-                else redCargo = Math.max(redCargo - amount, 0); { System.out.println("Red resource(s) removed"); return true; }
+                if (forceRemoval && redCargo - amount < 0) { GalaxyData.addLog(new Log("Failed to remove RED resource(s)")); return false; }
+                else {GalaxyData.addLog(new Log(Math.min(redCargo, amount) + " " + type.toUpperCase() +  " resource(s) removed")); redCargo = Math.max(redCargo - amount, 0); return true; }
             case "green":
-                if (forceRemoval && greenCargo - amount < 0) return false;
-                else greenCargo = Math.max(greenCargo - amount, 0); { System.out.println("Green resource(s) removed"); return true; }
+                if (forceRemoval && greenCargo - amount < 0) { GalaxyData.addLog(new Log("Failed to remove GREEN resource(s)")); return false; }
+                else {GalaxyData.addLog(new Log(Math.min(greenCargo, amount) + " " + type.toUpperCase() +  " resource(s) removed")); greenCargo = Math.max(greenCargo - amount, 0); return true; }
             case "blue":
-                if (forceRemoval && blueCargo - amount < 0) return false;
-                else blueCargo = Math.max(blueCargo - amount, 0); { System.out.println("Blue resource(s) removed"); return true; }
+                if (forceRemoval && blueCargo - amount < 0) { GalaxyData.addLog(new Log("Failed to remove BLUE resource(s)")); return false; }
+                else {GalaxyData.addLog(new Log(Math.min(blueCargo, amount) + " " + type.toUpperCase() +  " resource(s) removed")); blueCargo = Math.max(blueCargo - amount, 0); return true; }
             case "black":
-                if (forceRemoval && blackCargo - amount < 0) return false;
-                else blackCargo = Math.max(blackCargo - amount, 0); { System.out.println("Black resource(s) removed"); return true; }
+                if (forceRemoval && blackCargo - amount < 0) { GalaxyData.addLog(new Log("Failed to remove BLACK resource(s)")); return false; }
+                else {GalaxyData.addLog(new Log(Math.min(blackCargo, amount) + " " + type.toUpperCase() +  " resource(s) removed")); blackCargo = Math.max(blackCargo - amount, 0); return true; }
         }
         return false;
     }
@@ -272,7 +274,7 @@ public class Ship implements Serializable {
     public void convertResource(String type, String into){
         if (removeResource(type, 1, true)) {
             addResource(into, 1);
-            System.out.println("Resource(s) converted");
+            GalaxyData.addLog(new Log(type.toUpperCase() + " to " + into.toUpperCase() +  " converted"));
         }
     }
 
@@ -282,7 +284,7 @@ public class Ship implements Serializable {
             removeResource("green", 1, true);
             removeResource("blue", 1, true);
             setShields(getShields() + 1);
-            System.out.println("Energy shield produced");
+            GalaxyData.addLog(new Log("Energy shield produced"));
         }
     }
     
@@ -291,7 +293,7 @@ public class Ship implements Serializable {
             removeResource("black", 1, true);
             removeResource("blue", 1, true);
             setAmmo(getAmmo() + 1);
-            System.out.println("Ammo produced");
+            GalaxyData.addLog(new Log("Ammo produced"));
         }
     }
 
@@ -301,7 +303,7 @@ public class Ship implements Serializable {
             removeResource("red", 1, true);
             removeResource("blue", 1, true);
             setFuel(getFuel() + 1);
-            System.out.println("Fuel produced");
+            GalaxyData.addLog(new Log("Fuel produced"));
         }
     }
 
@@ -312,7 +314,7 @@ public class Ship implements Serializable {
             removeResource("blue", 2, true);
             removeResource("green", 2, true);
             setDroneWorking(true);
-            System.out.println("Drone bought");
+            GalaxyData.addLog(new Log("Drone bought"));
         }
     }
 
@@ -327,7 +329,7 @@ public class Ship implements Serializable {
             setGreenCargoCapacity(getGreenCargoCapacity() + 6);
             setBlueCargoCapacity(getBlueCargoCapacity() + 6);
             setBlackCargoCapacity(getBlackCargoCapacity() + 6);
-            System.out.println("Cargo upgraded");
+            GalaxyData.addLog(new Log("Cargo upgraded"));
         }
     }
 
@@ -339,7 +341,7 @@ public class Ship implements Serializable {
             removeResource("green", 2, true);
             setWeaponSystemLevel(getCargoLevel() + 1);
             setAmmoCapacity(getAmmoCapacity() + 9);
-            System.out.println("Weapon system upgraded");
+            GalaxyData.addLog(new Log("Weapon system upgraded"));
         }
     }
 
@@ -350,7 +352,7 @@ public class Ship implements Serializable {
             removeResource("blue", 1, true);
             removeResource("green", 1, true);
             setCrew(getCrew() + 1);
-            System.out.println("New member recruited");
+            GalaxyData.addLog(new Log("New member recruited"));
         }
     }
 
@@ -361,7 +363,7 @@ public class Ship implements Serializable {
             removeResource("blue", 1, true);
             removeResource("green", 1, true);
             shields = shieldsCapacity;
-            System.out.println("Shield fully fixed");
+            GalaxyData.addLog(new Log("Shield fully fixed"));
         }
     }
 }

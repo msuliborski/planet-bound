@@ -1,13 +1,14 @@
 package com.suliborski.planetbound.logic.states;
 
 import com.suliborski.planetbound.logic.GalaxyData;
+import com.suliborski.planetbound.logic.data.Log;
 import com.suliborski.planetbound.logic.data.Ship;
 
 public class ShipSelectionState extends StateAdapter {
 
     public ShipSelectionState(GalaxyData galaxyData) {
         super(galaxyData);
-        System.out.println("Into ShipSelection State");
+        GalaxyData.addLog(new Log("Into ShipSelection State"));
     }
 
     @Override

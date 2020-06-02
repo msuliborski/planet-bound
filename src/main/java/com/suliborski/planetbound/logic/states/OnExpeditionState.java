@@ -1,12 +1,13 @@
 package com.suliborski.planetbound.logic.states;
 
 import com.suliborski.planetbound.logic.GalaxyData;
+import com.suliborski.planetbound.logic.data.Log;
 
 public class OnExpeditionState extends StateAdapter {
     
     public OnExpeditionState(GalaxyData galaxyData) {
         super(galaxyData);
-        System.out.println("Into OnExpeditionState State");
+        GalaxyData.addLog(new Log("Into OnExpeditionState State"));
     }
 
     @Override

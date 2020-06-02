@@ -4,8 +4,13 @@ import com.suliborski.planetbound.logic.data.*;
 import com.suliborski.planetbound.logic.states.IState;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GalaxyData implements Serializable {
+    private static final List<Log> logs = new ArrayList<>();
+    private List<Log> permanentLogs = new ArrayList<>();
+
     private Ship ship;
 
     private Planet planet;
@@ -17,10 +22,30 @@ public class GalaxyData implements Serializable {
 
     private int artifactsNeeded = 5;
 
+    public static void addLog(Log log){
+        logs.add(log);
+        System.out.println(log.toString());
+    }
+    public String getPermanentLogsString(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Log log : permanentLogs) {
+            stringBuilder.append(log.toString()).append("\n");
+        }
+        return stringBuilder.toString();
+    }
+    public void clearLogs() {
+        logs.clear();
+    }
+    public void logsToPermanentLogs() {
+        permanentLogs.addAll(logs);
+    }
+    public void permanentLogsLogsTo() {
+        logs.addAll(permanentLogs);
+    }
+
     public Ship getShip() {
         return ship;
     }
-
     public void setShip(Ship ship) {
         this.ship = ship;
     }
@@ -28,7 +53,6 @@ public class GalaxyData implements Serializable {
     public Planet getPlanet() {
         return planet;
     }
-
     public void setPlanet(Planet planet) {
         this.planet = planet;
     }
@@ -36,7 +60,6 @@ public class GalaxyData implements Serializable {
     public EventType getEventType() {
         return eventType;
     }
-
     public void setEventType(EventType eventType) {
         this.eventType = eventType;
     }
@@ -44,7 +67,6 @@ public class GalaxyData implements Serializable {
     public Expedition getExpedition() {
         return expedition;
     }
-
     public void setExpedition(Expedition expedition) {
         this.expedition = expedition;
     }
@@ -52,7 +74,6 @@ public class GalaxyData implements Serializable {
     public int getArtifactsNeeded() {
         return artifactsNeeded;
     }
-
     public void setArtifactsNeeded(int artifactsNeeded) {
         this.artifactsNeeded = artifactsNeeded;
     }
@@ -60,7 +81,6 @@ public class GalaxyData implements Serializable {
     public IState getState() {
         return state;
     }
-
     public void setState(IState state) {
         this.state = state;
     }

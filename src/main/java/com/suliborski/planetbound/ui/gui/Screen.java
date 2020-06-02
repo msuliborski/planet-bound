@@ -1,5 +1,6 @@
 package com.suliborski.planetbound.ui.gui;
 
+import com.suliborski.planetbound.logic.GalaxyData;
 import com.suliborski.planetbound.logic.GalaxyLogic;
 import com.suliborski.planetbound.logic.states.*;
 import javafx.collections.FXCollections;
@@ -185,8 +186,8 @@ public class Screen implements Initializable {
 
         ObservableList<String> saves = FXCollections.observableArrayList();
 
-        for (File listOfFile : listOfFiles) {
-            if (listOfFile.isFile()) saves.add(listOfFile.getName().substring(0, listOfFile.getName().lastIndexOf('.')));
+        for (File file : listOfFiles) {
+            if (file.isFile() && file.getName().substring(file.getName().lastIndexOf('.')).equals(".pbs")) saves.add(file.getName().substring(0, file.getName().lastIndexOf('.')));
         }
         whichSpinner.setValueFactory(new SpinnerValueFactory.ListSpinnerValueFactory<>(saves));
     }
@@ -506,13 +507,7 @@ public class Screen implements Initializable {
 
     @FXML
     private void deleteSave() {
-        File file = new File("saves/" + whichSpinner.getValue() + ".pbs");
-
-        if(file.delete()) {
-            System.out.println("File deleted successfully");
-        } else {
-            System.out.println("Failed to delete the file");
-        }
+        galaxyLogic.deleteGame(whichSpinner.getValue());
         updateSaveSpinner();
     }
 
