@@ -113,12 +113,12 @@ public class GalaxyLogic {
     public void saveGame(String fileName){
         galaxyData.setState(this.state);
         try(ObjectOutputStream saveOut = new ObjectOutputStream(new FileOutputStream("saves/" + fileName + ".pbs"));
-            DataOutputStream logOut = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("saves/" + fileName + ".log")))) {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("saves/" + fileName + ".log"))) {
             GalaxyData.addLog(new Log("Game has been saved to " + fileName + ".pbs file."));
             GalaxyData.addLog(new Log("Log has been saved to " + fileName + ".log file."));
             galaxyData.logsToPermanentLogs();
             saveOut.writeObject(galaxyData);
-            logOut.writeUTF(galaxyData.getPermanentLogsString());
+            writer.write(galaxyData.getPermanentLogsString());
         } catch(IOException ex) {
             ex.printStackTrace();
         }

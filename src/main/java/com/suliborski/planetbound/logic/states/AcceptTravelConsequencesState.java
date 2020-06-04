@@ -75,7 +75,7 @@ public class AcceptTravelConsequencesState extends StateAdapter {
             case noEvent:
                 return new OnPlanetState(galaxyData);
             case crewRescue:
-                if (galaxyData.getShip().getCrew() <= 6)
+                if (galaxyData.getShip().getCrew() < 6)
                     galaxyData.getShip().setCrew(galaxyData.getShip().getCrew() + 1);
                 return new OnPlanetState(galaxyData);
         }

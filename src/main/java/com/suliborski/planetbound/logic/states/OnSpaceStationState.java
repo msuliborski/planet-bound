@@ -30,13 +30,15 @@ public class OnSpaceStationState extends StateAdapter {
 
     @Override
     public IState upgradeCargoCapacity() {
-        galaxyData.getShip().upgradeCargo();
+        if (galaxyData.getPlanet().isCanUpgradeCargo() && galaxyData.getShip().upgradeCargo())
+            galaxyData.getPlanet().setCanUpgradeCargo(false);
         return this;
     }
 
     @Override
     public IState upgradeWeaponSystem() {
-        galaxyData.getShip().upgradeWeaponSystem();
+        if (galaxyData.getPlanet().isCanUpgradeWeaponSystem() && galaxyData.getShip().upgradeWeaponSystem())
+            galaxyData.getPlanet().setCanUpgradeWeaponSystem(false);
         return this;
     }
 

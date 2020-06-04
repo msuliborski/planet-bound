@@ -318,7 +318,7 @@ public class Ship implements Serializable {
         }
     }
 
-    public void upgradeCargo() {
+    public boolean upgradeCargo() {
         if (getBlackCargo() >= 1 && getGreenCargo() >= 1 && getRedCargo() >= 1 && getBlueCargo() >= 1 && getCargoLevel() < getMaxCargoLevel()) {
             removeResource("black", 1, true);
             removeResource("red", 1, true);
@@ -330,10 +330,12 @@ public class Ship implements Serializable {
             setBlueCargoCapacity(getBlueCargoCapacity() + 6);
             setBlackCargoCapacity(getBlackCargoCapacity() + 6);
             GalaxyData.addLog(new Log("Cargo upgraded"));
+            return true;
         }
+        return false;
     }
 
-    public void upgradeWeaponSystem() {
+    public boolean upgradeWeaponSystem() {
         if (getBlackCargo() >= 2 && getGreenCargo() >= 2 && getRedCargo() >= 2 && getBlueCargo() >= 2 && getWeaponSystemLevel() < getMaxWeaponSystemLevel()) {
             removeResource("black", 2, true);
             removeResource("red", 2, true);
@@ -342,7 +344,9 @@ public class Ship implements Serializable {
             setWeaponSystemLevel(getCargoLevel() + 1);
             setAmmoCapacity(getAmmoCapacity() + 9);
             GalaxyData.addLog(new Log("Weapon system upgraded"));
+            return true;
         }
+        return false;
     }
 
     public void recruitCrewMember() {

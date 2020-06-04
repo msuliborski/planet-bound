@@ -9,11 +9,14 @@ public class Planet implements Serializable {
     private String type;
     List<String> resourceIds = new ArrayList<>();
     private boolean spaceStationAvailable;
+    private boolean canUpgradeCargo;
+    private boolean canUpgradeWeaponSystem;
 
     public Planet(String type) {
         this.type = type;
         this.spaceStationAvailable = Math.random() <= 0.3;
-
+        this.canUpgradeCargo = this.spaceStationAvailable;
+        this.canUpgradeWeaponSystem = this.spaceStationAvailable;
         if (type.equals("red")) {
             resourceIds.add("red");
             resourceIds.add("blue");
@@ -68,5 +71,21 @@ public class Planet implements Serializable {
 
     public boolean isExplorable(){
         return !resourceIds.isEmpty();
+    }
+
+    public boolean isCanUpgradeCargo() {
+        return canUpgradeCargo;
+    }
+
+    public void setCanUpgradeCargo(boolean canUpgradeCargo) {
+        this.canUpgradeCargo = canUpgradeCargo;
+    }
+
+    public boolean isCanUpgradeWeaponSystem() {
+        return canUpgradeWeaponSystem;
+    }
+
+    public void setCanUpgradeWeaponSystem(boolean canUpgradeWeaponSystem) {
+        this.canUpgradeWeaponSystem = canUpgradeWeaponSystem;
     }
 }
