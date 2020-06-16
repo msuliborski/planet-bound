@@ -43,6 +43,14 @@
                     <target>11</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.3</version>
+                <configuration>
+                    <mainClass>com.suliborski.planetbound.ui.gui.GraphicalInterface</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

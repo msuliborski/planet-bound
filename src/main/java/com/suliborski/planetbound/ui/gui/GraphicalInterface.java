@@ -12,7 +12,7 @@ public class GraphicalInterface extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        URL location = getClass().getResource("/com/suliborski/planetbound/MainView.fxml");
+        URL location = getClass().getResource("/MainView.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(location);
         Parent parent = fxmlLoader.load();
         Scene scene = new Scene(parent/*, 600, 100*/);
